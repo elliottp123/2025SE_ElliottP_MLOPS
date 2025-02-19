@@ -1,0 +1,9 @@
+numpy
+ipympl
+ipywidgets
+matplotlib
+pandas
+torch
+torchvision
+tqdm
+scikit-learn

@@ -1,0 +1,61 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "hostRequirements": {
+    "cpus": 4
+  },
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "python3 -m pip install -r requirements.txt",
+  "postCreateCommand": "",
+  "postAttachCommand": {},
+  "portsAttributes": {
+    "8888": {
+      "label": "Environment"
+    }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": []
+    },
+    "vscode": {
+      "settings": {
+        "files.autoSave": "onFocusChange",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        },
+        "editor.fontSize": 18,
+        "terminal.integrated.defaultProfile.windows": "Git Bash",
+        "window.restoreWindows": "preserve",
+        "workbench.editorAssociations": {
+          "*.md": "vscode.markdown.preview.editor"
+        }
+      },
+      "extensions": [
+        "McCarter.start-git-bash",
+        "yy0931.vscode-sqlite3-editor",
+        "ms-python.python",
+        "esbenp.prettier-vscode",
+        "oderwat.indent-rainbow",
+        "tomoki1207.pdf",
+        "GitHub.codespaces",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "yahyabatulu.vscode-markdown-alert",
+        "bierner.markdown-preview-github-styles",
+        "mechatroner.rainbow-csv",
+        "ms-python.pylint",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "ms-toolsai.datawrangler",
+        "bierner.markdown-mermaid",
+        "ms-python.vscode-python-envs"
+      ]
+    }
+  },
+  "forwardPorts": [8888]
+}
