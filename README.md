@@ -38,11 +38,12 @@ https://www.wisdomgeek.com/development/data-science/converting-business-problem-
 
 2. Refactoring the business problem into a machine learning problem
 
-   - _Students to refactor the provided business problem_
+   - a ML model that prdicts disease progression over 12 months based on input features provided by doctors.
+   - My personal definition would be a model that sucessfully correlates through linear regression, the connections between input features and the disease progression targets
 
 3. Defining success metrics
 
-   - _Students to define success metrics_
+   - Model generalises well to training data, testing, and new data, captured during post development phases.
 
 4. Researching available data.
 
