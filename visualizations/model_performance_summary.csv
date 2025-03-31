@@ -1,0 +1,5 @@
+Subject,Gender,G1 Accuracy,G2 Accuracy,G3 RMSE,G3 R²
+Mathematics,Female,0.8289,0.6842,0.9467,0.9116
+Mathematics,Male,0.6389,0.7778,1.4990,0.6892
+Portuguese,Female,0.8489,0.8345,0.8136,0.8785
+Portuguese,Male,0.8519,0.7778,0.8160,0.8638
