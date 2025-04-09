@@ -16,7 +16,7 @@
 - Python backend
 - Javascript front-end server
 - API OOP oriented design
-- SQL database (for setting new user data**(Not in use)**)
+- SQL database (for setting new user data)
 
 # Task2ML webapp initialisation
 
