@@ -369,6 +369,9 @@ class PredictionManager {
       const result = await response.json();
       this.logger.debug("Received prediction results:", result);
 
+      this.lastPredictionData = data;
+      this.lastPredictionResult = result;
+
       this.displayResults(result.predictions);
       resultsDiv.style.display = "block";
     } catch (error) {
@@ -376,6 +379,40 @@ class PredictionManager {
       showNotification(error.message, "danger");
     } finally {
       submitBtn.disabled = false;
+    }
+  }
+
+  async handleSetData() {
+    if (!this.lastPredictionData || !this.lastPredictionResult) {
+      showNotification("No prediction data available to save", "danger");
+      return;
+    }
+
+    try {
+      // Combine the prediction data with the actual results
+      const dataToSave = {
+        ...this.lastPredictionData,
+        G3: this.lastPredictionResult.predictions.G3,
+      };
+
+      const response = await fetch("/api/new-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSave),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to save data");
+      }
+
+      showNotification("Data saved successfully", "success");
+      document.getElementById("setDataButton").style.display = "none";
+    } catch (error) {
+      this.logger.error("Save data error:", error);
+      showNotification(error.message, "danger");
     }
   }
 

@@ -362,26 +362,6 @@
         </div>
       </div>
 
-      <!-- Prediction Type -->
-      <div class="col-md-6 mb-3">
-        <h4>Prediction Type</h4>
-        <div class="mb-3">
-          <label for="prediction_type" class="form-label"
-            >Select Grade Period to Predict</label
-          >
-          <select
-            class="form-select"
-            id="prediction_type"
-            name="prediction_type"
-            required
-          >
-            <option value="G1">First Period (G1)</option>
-            <option value="G2">Second Period (G2)</option>
-            <option value="G3">Final Grade (G3)</option>
-          </select>
-        </div>
-      </div>
-
       <!-- Additional Information -->
       <div class="col-md-6 mb-3">
         <h4>Additional Information</h4>
@@ -441,6 +421,17 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Save Data Button Section -->
+  <div class="mt-3 text-center">
+    <button
+      id="setDataButton"
+      class="btn btn-success btn-lg"
+      style="display: none"
+    >
+      Save This Prediction as Training Data
+    </button>
   </div>
 </div>
 
@@ -519,11 +510,10 @@
         G2: Number(formData.get("G2")) || 0,
       };
 
-      // Add prediction type and other metadata
+      // Add metadata
       const metadata = {
         subject: formData.get("subject") || "mathematics",
         gender: formData.get("gender") || "female",
-        prediction_type: formData.get("prediction_type") || "G3",
       };
 
       // Combine data with metadata
@@ -549,6 +539,10 @@
         const result = await response.json();
         console.log("Received result:", result);
 
+        // Store the prediction data and results globally
+        window.lastPredictionData = requestData;
+        window.lastPredictionResult = result;
+
         // Display results
         document.getElementById("results").style.display = "block";
         document.getElementById(
@@ -562,8 +556,48 @@
         document.getElementById(
           "g2-prediction"
         ).textContent = `${requestData.G2.toFixed(2)} (provided)`;
+
+        // Show the save data button
+        document.getElementById("setDataButton").style.display = "block";
       } catch (error) {
         console.error("Prediction error:", error);
+        alert(error.message);
+      }
+    });
+
+  // Add the setDataButton click handler
+  document
+    .getElementById("setDataButton")
+    .addEventListener("click", async () => {
+      if (!window.lastPredictionData || !window.lastPredictionResult) {
+        alert("No prediction data available to save");
+        return;
+      }
+
+      try {
+        // Combine the last prediction data with the G3 result
+        const dataToSave = {
+          ...window.lastPredictionData,
+          G3: window.lastPredictionResult.predictions.G3,
+        };
+
+        const response = await fetch("/api/new-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSave),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Failed to save data");
+        }
+
+        alert("Data saved successfully!");
+        document.getElementById("setDataButton").style.display = "none";
+      } catch (error) {
+        console.error("Save data error:", error);
         alert(error.message);
       }
     });

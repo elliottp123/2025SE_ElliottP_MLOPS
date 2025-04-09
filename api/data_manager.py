@@ -2,6 +2,13 @@ import re
 import logging
 from datetime import datetime
 import bcrypt
+import pandas as pd
+import os
+from flask import request, jsonify
+import logging
+from . import api  # Import the api Blueprint
+
+logger = logging.getLogger(__name__)
 
 class DataManager:
     # Define constants for data validation and normalization
@@ -188,3 +195,73 @@ class DataManager:
     @staticmethod
     def verify_password(password, hashed):
         return bcrypt.checkpw(DataManager.validate_password(password), hashed)
+
+    @staticmethod
+    def save_feedback_data(data):
+        """Save new training data to feedback CSV"""
+        try:
+            # Ensure all required columns are present
+            required_columns = DataManager.EXPECTED_COLUMNS + ['G1', 'G2', 'G3']
+            
+            # Process the input data
+            processed_data = DataManager.process_prediction_data(data)
+            
+            # Add G1, G2, G3 values
+            processed_data['G1'] = float(data.get('G1', 0))
+            processed_data['G2'] = float(data.get('G2', 0))
+            processed_data['G3'] = float(data.get('G3', 0))
+            
+            # Create DataFrame with single row
+            df_new = pd.DataFrame([processed_data])
+            
+            # Ensure all columns match training data format
+            for col in required_columns:
+                if col not in df_new.columns:
+                    df_new[col] = 0
+            
+            # Reorder columns to match training data
+            df_new = df_new[required_columns]
+            
+            # Create feedback_data directory if it doesn't exist
+            os.makedirs('feedback_data', exist_ok=True)
+            
+            # Append to existing file or create new one
+            feedback_file = 'feedback_data/feedback_data.csv'
+            if os.path.exists(feedback_file):
+                df_new.to_csv(feedback_file, mode='a', header=False, index=False)
+            else:
+                df_new.to_csv(feedback_file, index=False)
+                
+            return True
+        except Exception as e:
+            logging.error(f"Error saving feedback data: {str(e)}")
+            raise ValueError(f"Failed to save feedback data: {str(e)}")
+    
+    @staticmethod
+    @api.route('/new-data', methods=['POST'])
+    def handle_new_data():
+        """Handle new training data submission endpoint"""
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+
+        try:
+            data = request.get_json()
+            logger.info(f"New data submission: {data}")
+            
+            # Validate required fields
+            required_fields = ['G1', 'G2', 'G3']
+            for field in required_fields:
+                if field not in data or not isinstance(data.get(field), (int, float)):
+                    return jsonify({'error': f'Missing or invalid {field} value'}), 400
+            
+            # Save the data using existing method
+            success = DataManager.save_feedback_data(data)
+            
+            if success:
+                return jsonify({'message': 'Data saved successfully'})
+            else:
+                raise ValueError('Failed to save data')
+                
+        except Exception as e:
+            logger.error(f"New data submission failed: {str(e)}")
+            return jsonify({'error': str(e)}), 400
