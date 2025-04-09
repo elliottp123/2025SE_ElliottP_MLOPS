@@ -1,0 +1,29 @@
+# filepath: /workspaces/2025SE_ElliottP_MLOPS/api/predictor.py
+from flask import jsonify, request
+from . import api
+from models import db
+import joblib  # Assuming you're using joblib to load your model
+
+# Load your trained model (make sure to adjust the path)
+model = joblib.load('path/to/your/model.pkl')
+
+@api.route('/api/predict', methods=['POST'])
+def predict():
+    if not request.is_json:
+        return jsonify({'error': 'Request must be JSON'}), 400
+
+    data = request.get_json()
+
+    # Validate input data
+    required_fields = ['feature1', 'feature2', 'feature3']  # Adjust based on your model's input
+    if not all(field in data for field in required_fields):
+        return jsonify({'error': 'Missing fields in request data'}), 400
+
+    try:
+        # Prepare input data for prediction
+        input_data = [[data['feature1'], data['feature2'], data['feature3']]]  # Adjust based on your model's input
+        prediction = model.predict(input_data)
+
+        return jsonify({'prediction': prediction[0]})  # Return the prediction result
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

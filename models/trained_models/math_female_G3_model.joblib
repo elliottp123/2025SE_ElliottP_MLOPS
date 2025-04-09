@@ -1,0 +1,25 @@
+# filepath: /workspaces/2025SE_ElliottP_MLOPS/api/predictor.py
+from flask import jsonify, request
+from . import api
+import joblib  # Assuming you're using joblib to load your model
+
+# Load your trained model (replace 'model.pkl' with your actual model file)
+model = joblib.load('path/to/your/model.pkl')
+
+@api.route('/api/predict', methods=['POST'])
+def predict():
+    data = request.get_json()
+    
+    # Extract features from the incoming JSON data
+    features = [
+        data.get('feature1'),  # Replace with actual feature names
+        data.get('feature2'),
+        data.get('feature3'),
+        # Add more features as needed
+    ]
+    
+    # Make prediction
+    prediction = model.predict([features])
+    
+    # Return the prediction result
+    return jsonify({'prediction': prediction[0]})

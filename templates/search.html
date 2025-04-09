@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <section class="card" aria-labelledby="search-heading">
+                <div class="card-body">
+                    <h2 id="search-heading" class="card-title">Search Entries</h2>
+                    <form id="searchForm" role="search">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="projectSearch" class="visually-hidden">Project name</label>
+                                <input type="text" class="form-control" id="projectSearch" 
+                                       list="projectList" placeholder="Search by project name"
+                                       aria-label="Search by project name">
+                                <datalist id="projectList"></datalist>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="developerSearch" class="visually-hidden">Developer</label>
+                                <input type="text" class="form-control" id="developerSearch" 
+                                       list="developerList" placeholder="Search by developer"
+                                       aria-label="Search by developer">
+                                <datalist id="developerList"></datalist>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="dateSearch" class="visually-hidden">Date</label>
+                                <input type="date" class="form-control" id="dateSearch"
+                                       aria-label="Search by date">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sortField" class="visually-hidden">Sort by</label>
+                                <select class="form-control sort-controls" id="sortField"
+                                        aria-label="Sort field">
+                                    <option value="date">Sort by Date</option>
+                                    <option value="project">Sort by Project</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sortOrder" class="visually-hidden">Sort order</label>
+                                <select class="form-control sort-controls" id="sortOrder"
+                                        aria-label="Sort order">
+                                    <option value="desc">Descending</option>
+                                    <option value="asc">Ascending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Search Entries</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <section aria-label="Search Results">
+                <div id="searchResults" class="search-results-container" aria-live="polite">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

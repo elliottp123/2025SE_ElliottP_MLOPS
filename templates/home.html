@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Home(r)_Log{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="message-box mb-4" role="status">
+                <p class="mono-text">home() :: your_project_dashboard</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <section class="card mb-4" aria-labelledby="stats-heading">
+                <div class="card-body">
+                    <h2 id="stats-heading" class="card-title">Quick Stats</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-yellow">Total Projects</div>
+                            <div class="stat-value" id="projectCount" aria-live="polite">-</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-yellow">Total Entries</div>
+                            <div class="stat-value" id="entryCount" aria-live="polite">-</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-yellow">Developer Tag</div>
+                            <div class="stat-value" id="devTag" aria-live="polite">-</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <section aria-labelledby="recent-activity-heading">
+                <h2 id="recent-activity-heading" class="mb-4">Recent Activity</h2>
+                <div id="projectCards" class="row" aria-live="polite">
+                    <!-- Project cards will be inserted here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="{{ url_for('index') }}" class="btn btn-primary" role="button">Create New Entry</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

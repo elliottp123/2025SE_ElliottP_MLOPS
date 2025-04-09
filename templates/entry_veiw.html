@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="entry-title"></h1>
+            <p class="entry-metadata text-muted"></p>
+            <div class="entry-content"></div>
+            <hr>
+            <div class="entry-time-worked"></div>
+            <div class="entry-start-time"></div>
+            <div class="entry-end-time"></div>
+            <div class="entry-repository"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block message_box %}
+<div class="container mt-4">
+    <div class="message-box">
+        <p class="mono-text">view_entry :: full_log_details</p>
+    </div>
+</div>
+{% endblock %}

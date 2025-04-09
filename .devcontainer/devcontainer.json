@@ -1,21 +1,20 @@
 {
+  "name": "Python Flask Development Container",
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "hostRequirements": {
     "cpus": 4
   },
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "python3 -m pip install -r requirements.txt",
+  "updateContentCommand": "pip install -r requirements.txt",
   "postCreateCommand": "",
   "postAttachCommand": {},
   "portsAttributes": {
-    "8888": {
-      "label": "Environment"
+    "5000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
     }
   },
   "customizations": {
-    "codespaces": {
-      "openFiles": []
-    },
     "vscode": {
       "settings": {
         "files.autoSave": "onFocusChange",
@@ -34,28 +33,23 @@
       },
       "extensions": [
         "McCarter.start-git-bash",
+        "alexcvzz.vscode-sqlite",
+        "medo64.render-crlf",
+        "ecmel.vscode-html-css",
+        "ms-vscode.js-debug",
+        "dbaeumer.vscode-eslint",
+        "miramac.vscode-exec-node",
         "yy0931.vscode-sqlite3-editor",
-        "ms-python.python",
-        "esbenp.prettier-vscode",
         "oderwat.indent-rainbow",
+        "ritwickdey.LiveServer",
         "tomoki1207.pdf",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-wsl",
         "GitHub.codespaces",
-        "ms-python.debugpy",
-        "ms-python.vscode-pylance",
-        "yahyabatulu.vscode-markdown-alert",
-        "bierner.markdown-preview-github-styles",
-        "mechatroner.rainbow-csv",
-        "ms-python.pylint",
-        "ms-toolsai.jupyter",
-        "ms-toolsai.vscode-jupyter-cell-tags",
-        "ms-toolsai.jupyter-keymap",
-        "ms-toolsai.jupyter-renderers",
-        "ms-toolsai.vscode-jupyter-slideshow",
-        "ms-toolsai.datawrangler",
-        "bierner.markdown-mermaid",
-        "ms-python.vscode-python-envs"
+        "ms-vscode-remote.remote-wsl",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
-  "forwardPorts": [8888]
+  "forwardPorts": [5000]
 }
