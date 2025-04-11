@@ -2,7 +2,7 @@
 
 ## Machine Learning Algorithm
 
-\*\*This is all contained within Task2ML\*\* :
+**This is all contained in Task2ML folder** :
 
 - Data wrangling
 - Feature engineering and implementation
@@ -53,8 +53,13 @@ python main.py
 
 2. open the forwarded port website
 
-3. put in some data!
-   these models work better with females, mathematics, etc.
-   There are some fun interactions, like romantic rel can lower predictions, but romantic rel + primary gardian = mother produces a higher prediction.
-   But primarily you can get a prediction from data, the end.
-   Try and put in some exception case data and see if I missed anything.
+4. Sign up with a email and pass
+
+6. Log in with that email and pass
+
+7. put in some data with the website !
+
+these models work better with females, mathematics, etc.
+There are some fun interactions, like romantic rel can lower predictions, but romantic rel + primary gardian = mother produces a higher prediction.
+But primarily you can get a prediction from data, the end.
+Try and put in some exception case data and see if I missed anything.
